@@ -3,10 +3,9 @@
 
 void CApp::OnRender(){
 
-    SDL_RenderClear(Renderer);
+    ImageSurface = SDL_LoadBMP(".\\image.bmp");
 
-
-
-	SDL_RenderPresent(Renderer);
+    SDL_BlitSurface( ImageSurface, NULL, WindowSurface, NULL );
+    SDL_UpdateWindowSurface(Window);
 
 }

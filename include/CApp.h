@@ -2,22 +2,23 @@
 #define _CAPP_H_
 
 #include <SDL.h>
-
-#include "..\include\CSurface.h"
-
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
 
 class CApp {
 
 private:
     bool Running;
     SDL_Window* Window;
-    SDL_Renderer* Renderer = NULL;
-	SDL_Surface* PrimarySurface = NULL;
+    SDL_Surface* WindowSurface;
+    SDL_Surface* ImageSurface;
 
 
 public:
     CApp();
     int OnExecute();
+
 
 public:
     bool OnInit();

@@ -6,6 +6,8 @@ CApp::CApp(){
     Running = true;
 }
 
+
+
 int CApp::OnExecute(){
     if(OnInit() == false){
         return -1;

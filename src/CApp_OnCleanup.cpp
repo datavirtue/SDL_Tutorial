@@ -3,9 +3,15 @@
 
 void CApp::OnCleanup() {
 
-    if(Renderer) {
-		SDL_DestroyRenderer(Renderer);
-		Renderer = NULL;
+    if(WindowSurface) {
+		SDL_FreeSurface(WindowSurface);
+		WindowSurface = NULL;
+	}
+
+	if (ImageSurface){
+
+        SDL_FreeSurface(ImageSurface);
+        ImageSurface = NULL;
 	}
 
 	if(Window) {
