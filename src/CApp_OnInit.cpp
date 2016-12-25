@@ -32,5 +32,22 @@ bool CApp::OnInit(){
         success = false;
     }
 
+    printf("Window width %d", WindowSurface->w);
+    printf("Window height %d", WindowSurface->h);
+
+    SDL_BlitSurface(WindowSurface, NULL, OriginalSurface, NULL);
+
+    printf("Window width %d", OriginalSurface->w);
+    printf("Window height %d", OriginalSurface->h);
+
+    /* Load graphic assets */
+
+    KeyPressSurface.push_back(LoadImage(".\\assets\\image.bmp"));
+    KeyPressSurface.push_back(LoadImage(".\\assets\\berniehair.jpg"));
+    KeyPressSurface.push_back(LoadImage(".\\assets\\freecollege.jpg"));
+    KeyPressSurface.push_back(LoadImage(".\\assets\\freeedu.jpg"));
+    KeyPressSurface.push_back(LoadImage(".\\assets\\freetree.jpg"));
+
+
     return success;
 }

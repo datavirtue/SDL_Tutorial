@@ -30,20 +30,25 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="E:/dev/lib/SDL2_image-2.0.1/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
+			<Add option="-lSDL2_image" />
 			<Add library="../lib/SDL2-2.0.5/i686-w64-mingw32/lib/libSDL2main.a" />
 			<Add library="../lib/SDL2-2.0.5/i686-w64-mingw32/lib/libSDL2_test.a" />
 			<Add library="../lib/SDL2-2.0.5/i686-w64-mingw32/lib/libSDL2.dll.a" />
 			<Add library="../lib/SDL2-2.0.5/i686-w64-mingw32/lib/libSDL2.a" />
+			<Add directory="E:/dev/lib/SDL2_image-2.0.1/i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="include/CApp.h" />
+		<Unit filename="include/EventConstants.h" />
 		<Unit filename="src/CApp.cpp" />
 		<Unit filename="src/CApp_OnCleanup.cpp" />
 		<Unit filename="src/CApp_OnEvent.cpp" />
 		<Unit filename="src/CApp_OnInit.cpp" />
 		<Unit filename="src/CApp_OnLoop.cpp" />
 		<Unit filename="src/CApp_OnRender.cpp" />
+		<Unit filename="src/EventConstants.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
