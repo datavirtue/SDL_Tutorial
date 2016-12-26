@@ -26,19 +26,15 @@ bool CApp::OnInit(){
         success = false;
     }
 
+    // Get a reference to the Window surface so that we can copy other surfaces onto it with SDL_BlitSurface
     WindowSurface = SDL_GetWindowSurface(Window);
 
     if (WindowSurface == NULL) {
         success = false;
     }
 
-    printf("Window width %d", WindowSurface->w);
-    printf("Window height %d", WindowSurface->h);
-
-    SDL_BlitSurface(WindowSurface, NULL, OriginalSurface, NULL);
-
-    printf("Window width %d", OriginalSurface->w);
-    printf("Window height %d", OriginalSurface->h);
+    //Only way I know to copy a surface
+    OriginalSurface = SDL_ConvertSurface(WindowSurface, WindowSurface->format, NULL);
 
     /* Load graphic assets */
 

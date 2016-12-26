@@ -29,6 +29,12 @@ void CApp::OnEvent(SDL_Event *Event){
 
         }
 
+    }else if (Event->type == SDL_WINDOWEVENT_SIZE_CHANGED){
+        SDL_FreeSurface(WindowSurface);  //is this nessesary?
+        WindowSurface = SDL_GetWindowSurface(Window);
+        SDL_FreeSurface(OriginalSurface);
+        OriginalSurface = SDL_ConvertSurface(WindowSurface, WindowSurface->format, NULL);
+
     }
 
 
