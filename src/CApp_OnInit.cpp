@@ -26,9 +26,15 @@ bool CApp::OnInit(){
         success = false;
     }
 
+    /*
+
+        Surface Code
+
+    */
+
+
     // Get a reference to the Window surface so that we can copy other surfaces onto it with SDL_BlitSurface
     WindowSurface = SDL_GetWindowSurface(Window);
-
     if (WindowSurface == NULL) {
         success = false;
     }
@@ -43,6 +49,21 @@ bool CApp::OnInit(){
     KeyPressSurface.push_back(LoadImage(".\\assets\\freecollege.jpg"));
     KeyPressSurface.push_back(LoadImage(".\\assets\\freeedu.jpg"));
     KeyPressSurface.push_back(LoadImage(".\\assets\\freetree.jpg"));
+
+    /*
+
+        Renderer Code
+
+    */
+
+    Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+    if (Renderer == NULL){
+        success = false;
+    }else {
+        SDL_SetRenderDrawColor(Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+
+    }
 
 
     return success;

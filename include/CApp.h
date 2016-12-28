@@ -10,6 +10,10 @@
 #include <vector>
 #include "..\include\EventConstants.h"
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+
+
 class CApp {
 
 private:
@@ -17,9 +21,12 @@ private:
     SDL_Window* Window;
     SDL_Surface* WindowSurface;
     SDL_Surface* ImageSurface;
-
     SDL_Surface* OriginalSurface;
     std::vector<SDL_Surface*> KeyPressSurface;
+
+    SDL_Renderer* Renderer;
+    SDL_Texture* Texture;
+
 
 public:
     CApp();
@@ -31,6 +38,7 @@ public:
     void OnEvent(SDL_Event *Event);
     void OnLoop();
     void OnRender();
+    void OnRenderPrimitive();
     void OnCleanup();
     SDL_Surface* LoadImage(std::string file);
 

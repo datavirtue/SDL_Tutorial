@@ -18,8 +18,8 @@ void CApp::OnCleanup() {
 
 
 
-    for (int i= 1; i < KeyPressSurface.size(); i++) {
-
+    for (int i= 0; i < KeyPressSurface.size(); i++) {
+        printf("KeyPressSurface %d, %p, %s", i, KeyPressSurface.at(i), ((std::string*)KeyPressSurface.at(i)->userdata));
         if (KeyPressSurface.at(i)){
 
             SDL_FreeSurface(KeyPressSurface.at(i));
@@ -32,5 +32,9 @@ void CApp::OnCleanup() {
 		Window = NULL;
 	}
 
+	SDL_DestroyRenderer(Renderer);
+	SDL_DestroyTexture(Texture);
+
+    IMG_Quit();
     SDL_Quit();
 }

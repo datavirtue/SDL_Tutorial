@@ -1,4 +1,5 @@
-This is an adapted version of the SDL 1.2 tutorial from sdltutorials.com.  One quickly runs into issues when following this tutorial and learns that it is based on an old release of SDL. The olde version of SDL (quite old) is 1.2, the new version is 2.0 (quite modern).  This repo will develop as I progress through the tutorials found at http://lazyfoo.net/tutorials/SDL/index.php.  These seem to pick up where Tim Jones of sdltutorials.com left off and thier existence is probably why he has not updated his.  
+This is an adapted repo of the SDL tutorials at lazyfoo.net.  Starting with the organization and structure of the code from sdltutorials.com I try to add each bit of functionality as new or revised methods of a basic game loop and event/rendering class.  The goal is to use this repo as a tool for learning 2D game code structuring and the SDL library for rendering graphics and handling events. 
 
-SDL is a a C++ library that eases one into OpenGL game development.  This repo is developed as a Code::Blocks project on Windows 10 using MingW.  
+
+
 
