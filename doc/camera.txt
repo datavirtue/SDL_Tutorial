@@ -1,0 +1,36 @@
+My guess is you're trying to implement a camera, and should not be using SDL Viewports. The viewports are for UI elements like menus, minimaps, etc. It's a way of dividing up the screen into multiple areas.
+
+To implement a camera, you will want to think about coordinate systems. The world coordinates are the positions in the world, without thinking about the camera. If a tree is at 300,200 then it stays at 300,200 even if you move the camera around. The screen coordinates are where that tree is drawn on the screen. As you move around, the tree might be drawn in different places on screen.
+
+If you try to use screen coordinates everywhere, things get really confusing. Every time you move the camera, you now need to go update everything. If you use world coordinates, you don't "move" the tree around. Instead, you draw it in a different place. The tree doesn't move. The camera moves.
+
+Here's the basic formula:
+
+screen + camera = world
+You know the world coordinates of the tree, and the camera location, and you want to figure out the screen coordinates, so you rewrite the formula this way:
+
+screen = world - camera
+With the tree example, the tree is at x=300,y=200, and let's say the camera is at x=50,y=70, then you want to know where to draw the tree:
+
+screen.x = tree.x - camera.x
+screen.y = tree.y - camera.y
+#
+screen.x = 300 - 50 = 250
+screen.y = 200 - 70 = 130
+# draw tree at 250,130
+When you move your camera, you redraw everything on the screen by calculating the new screen coordinates. If you moved the camera to x=100,y=20, you'd redraw the tree:
+
+screen.x = tree.x - camera.x
+screen.y = tree.y - camera.y
+#
+screen.x = 300 - 100 = 200
+screen.y = 200 - 20 = 180
+# draw tree at 200,180
+Notice that tree.x,tree.y didn't change here. It's only the camera that changed. (You can later optimize this by not drawing the things that won't be on the screen, but first get the basics working before trying to optimize.)
+
+(A bonus with the formula is that it works backwards too. If you got a mouse click and want to know where in the world you clicked, you use screen + camera = world. You know the screen location of the mouse click, and you know the camera location, so you add them together to figure out what you clicked on.)
+
+One day I will finish my tutorial on this topic…
+
+Amitp on stackexchange
+

@@ -49,6 +49,7 @@
 		<Unit filename="src/CApp_OnLoop.cpp" />
 		<Unit filename="src/CApp_OnRender.cpp" />
 		<Unit filename="src/EventConstants.cpp" />
+		<Unit filename="src/LTexture.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

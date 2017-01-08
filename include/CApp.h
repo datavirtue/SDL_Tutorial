@@ -14,6 +14,27 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 
+
+
+class LTexture {
+public:
+        LTexture();
+        ~LTexture();
+        bool loadFromFile(std::string path, SDL_Renderer* renderer);
+        void free();
+        void render(int x, int y, SDL_Renderer* renderer);
+        int getWidth();
+        int getHeight();
+
+private:
+    SDL_Texture* mTexture;
+
+    int mWidth;
+    int mHeight;
+};
+
+
+
 class CApp {
 
 private:
@@ -21,11 +42,11 @@ private:
     SDL_Window* Window;
     SDL_Surface* WindowSurface;
     SDL_Surface* ImageSurface;
-    SDL_Surface* OriginalSurface;
-    std::vector<SDL_Surface*> KeyPressSurface;
 
+    std::vector<SDL_Surface*> KeyPressSurface;
     SDL_Renderer* Renderer;
-    SDL_Texture* Texture;
+    LTexture gFooTexture;
+    LTexture gBackgroundTexture;
 
 
 public:
@@ -40,10 +61,12 @@ public:
     void OnRender();
     void OnRenderPrimitive();
     void OnCleanup();
-    SDL_Surface* LoadImage(std::string file);
-
 
 };
+
+
+
+
 #endif
 
 
