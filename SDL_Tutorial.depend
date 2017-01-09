@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1483914551 source:e:\dev\sdl_tutorial\src\capp.cpp
+1483930165 source:e:\dev\sdl_tutorial\src\capp.cpp
 	"..\include\CApp.h"
 
-1483913570 e:\dev\sdl_tutorial\include\capp.h
+1483930518 e:\dev\sdl_tutorial\include\capp.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -44,6 +44,6 @@
 	"begin_code.h"
 	"close_code.h"
 
-1483914188 source:e:\dev\sdl_tutorial\src\ltexture.cpp
+1483930502 source:e:\dev\sdl_tutorial\src\ltexture.cpp
 	"..\include\CApp.h"
 

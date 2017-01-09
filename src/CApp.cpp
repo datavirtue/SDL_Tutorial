@@ -5,8 +5,6 @@ CApp::CApp(){
     Renderer = 0;
     Running = true;
 
-    LTexture gFooTexture;
-    LTexture gBackgroundTexture;
 
 }
 
@@ -31,9 +29,8 @@ int CApp::OnExecute(){
         }
 
         OnLoop();
-
         OnRender();
-        //scanf("Pause..." );
+
     }
 
     OnCleanup();
@@ -47,15 +44,14 @@ void CApp::OnRender(){
 
 
     //Clear screen
-    //SDL_SetRenderDrawColor( Renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
+    SDL_SetRenderDrawColor( Renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( Renderer );
 
-    gBackgroundTexture.render(0,0, Renderer);
+    gSpriteSheetTexture.render(0,0, Renderer, &gSpriteClips[0]);
+    gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[1].w, 0, Renderer, &gSpriteClips[1]);
+    gSpriteSheetTexture.render(0,SCREEN_HEIGHT - gSpriteClips[2].h, Renderer, &gSpriteClips[2]);
+    gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[3].w, SCREEN_HEIGHT - gSpriteClips[3].h, Renderer, &gSpriteClips[3]);
 
-    gFooTexture.render(240,190, Renderer);
-
-    printf("Render call Renderer %p\n", Renderer);
 
     SDL_RenderPresent( Renderer );
 
@@ -112,17 +108,34 @@ bool CApp::OnInit(){
     }
 
      //Load Foo' texture
-    if( !gFooTexture.loadFromFile( ".\\assets\\foo.png", Renderer ) )
+    if( !gSpriteSheetTexture.loadFromFile( ".\\assets\\sprites.png", Renderer ) )
     {
         printf( "Failed to load Foo' texture image!\n" );
         success = false;
-    }
+    }else {
+       //Set top left sprite
+        gSpriteClips[ 0 ].x =   0;
+        gSpriteClips[ 0 ].y =   0;
+        gSpriteClips[ 0 ].w = 100;
+        gSpriteClips[ 0 ].h = 100;
 
-    //Load background texture
-    if( !gBackgroundTexture.loadFromFile( ".\\assets\\background.png", Renderer ) )
-    {
-        printf( "Failed to load background texture image!\n" );
-        success = false;
+        //Set top right sprite
+        gSpriteClips[ 1 ].x = 100;
+        gSpriteClips[ 1 ].y =   0;
+        gSpriteClips[ 1 ].w = 100;
+        gSpriteClips[ 1 ].h = 100;
+
+        //Set bottom left sprite
+        gSpriteClips[ 2 ].x =   0;
+        gSpriteClips[ 2 ].y = 100;
+        gSpriteClips[ 2 ].w = 100;
+        gSpriteClips[ 2 ].h = 100;
+
+        //Set bottom right sprite
+        gSpriteClips[ 3 ].x = 100;
+        gSpriteClips[ 3 ].y = 100;
+        gSpriteClips[ 3 ].w = 100;
+        gSpriteClips[ 3 ].h = 100;
     }
 
     return success;
@@ -131,8 +144,7 @@ bool CApp::OnInit(){
 
 void CApp::OnCleanup() {
 
-    gBackgroundTexture.free();
-    gFooTexture.free();
+    gSpriteSheetTexture.free();
 
 	if(Window) {
 		SDL_DestroyWindow(Window);

@@ -22,11 +22,13 @@ public:
         ~LTexture();
         bool loadFromFile(std::string path, SDL_Renderer* renderer);
         void free();
-        void render(int x, int y, SDL_Renderer* renderer);
+        void render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip);
         int getWidth();
         int getHeight();
 
 private:
+
+
     SDL_Texture* mTexture;
 
     int mWidth;
@@ -45,8 +47,9 @@ private:
 
     std::vector<SDL_Surface*> KeyPressSurface;
     SDL_Renderer* Renderer;
-    LTexture gFooTexture;
-    LTexture gBackgroundTexture;
+    SDL_Rect gSpriteClips[4];
+    LTexture gSpriteSheetTexture;
+
 
 
 public:
