@@ -1,5 +1,6 @@
 #include "..\include\CApp.h"
 
+SDL_Texture* mTexture = NULL;
 
 LTexture::LTexture(){
     mTexture = NULL;
@@ -54,6 +55,12 @@ void LTexture::free(){
         mWidth = 0;
         mHeight = 0;
     }
+}
+
+void LTexture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
+
+    SDL_SetTextureColorMod(mTexture, red, green, blue);
+
 }
 
 void LTexture::render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip){

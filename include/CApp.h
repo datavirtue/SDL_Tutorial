@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <string>
 #include <vector>
+#include <cstdlib>
 #include "..\include\EventConstants.h"
 
 const int SCREEN_WIDTH = 640;
@@ -25,12 +26,10 @@ public:
         void render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip);
         int getWidth();
         int getHeight();
+        void setColor(Uint8 red, Uint8 green, Uint8 blue);
 
 private:
-
-
     SDL_Texture* mTexture;
-
     int mWidth;
     int mHeight;
 };
@@ -44,17 +43,21 @@ private:
     SDL_Window* Window;
     SDL_Surface* WindowSurface;
     SDL_Surface* ImageSurface;
-
     std::vector<SDL_Surface*> KeyPressSurface;
     SDL_Renderer* Renderer;
     SDL_Rect gSpriteClips[4];
     LTexture gSpriteSheetTexture;
-
+    struct colorMap {
+        Uint8 red;
+        Uint8 green;
+        Uint8 blue;
+    };
 
 
 public:
     CApp();
     int OnExecute();
+
 
 
 public:

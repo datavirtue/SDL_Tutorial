@@ -1,14 +1,33 @@
 #include "..\include\CApp.h"
 
+
+bool Running;
+SDL_Window* Window = NULL;
+SDL_Surface* WindowSurface = NULL;
+SDL_Surface* ImageSurface = NULL;
+std::vector<SDL_Surface*> KeyPressSurface;
+SDL_Renderer* Renderer;
+SDL_Rect gSpriteClips[4];
+LTexture gSpriteSheetTexture;
+
+struct colorMap {
+    Uint8 red;
+    Uint8 green;
+    Uint8 blue;
+};
+
+colorMap tColorMap;
+
 CApp::CApp(){
     Window = NULL;
     Renderer = 0;
     Running = true;
 
-
+    tColorMap.red = 1;
+    tColorMap.green = 0;
+    tColorMap.blue = 0;
+    std::srand(254);
 }
-
-
 
 
 int CApp::OnExecute(){
@@ -24,11 +43,18 @@ int CApp::OnExecute(){
     /* The game loop */
     while(Running){
 
+
         while(SDL_PollEvent(&Event)){
             OnEvent(&Event);
         }
 
         OnLoop();
+
+        tColorMap.red = std::rand();
+        tColorMap.green = std::rand();
+        tColorMap.blue = std::rand();
+
+        printf("Color Map: %d %d %d", tColorMap.red, tColorMap.green, tColorMap.blue);
         OnRender();
 
     }
@@ -52,6 +78,7 @@ void CApp::OnRender(){
     gSpriteSheetTexture.render(0,SCREEN_HEIGHT - gSpriteClips[2].h, Renderer, &gSpriteClips[2]);
     gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[3].w, SCREEN_HEIGHT - gSpriteClips[3].h, Renderer, &gSpriteClips[3]);
 
+    gSpriteSheetTexture.setColor(tColorMap.red, tColorMap.green, tColorMap.blue);
 
     SDL_RenderPresent( Renderer );
 
