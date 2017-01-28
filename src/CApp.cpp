@@ -73,12 +73,16 @@ void CApp::OnRender(){
     SDL_SetRenderDrawColor( Renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( Renderer );
 
+    // Ideally we would create a grid addressing method to select the clip without thinking about all of the screen coordinates
     gSpriteSheetTexture.render(0,0, Renderer, &gSpriteClips[0]);
     gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[1].w, 0, Renderer, &gSpriteClips[1]);
     gSpriteSheetTexture.render(0,SCREEN_HEIGHT - gSpriteClips[2].h, Renderer, &gSpriteClips[2]);
     gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[3].w, SCREEN_HEIGHT - gSpriteClips[3].h, Renderer, &gSpriteClips[3]);
 
-    gSpriteSheetTexture.setColor(tColorMap.red, tColorMap.green, tColorMap.blue);
+    gSpriteSheetTexture.setBlendMode(SDL_BLENDMODE_BLEND);
+    gSpriteSheetTexture.setAlpha(255);
+
+    //gSpriteSheetTexture.setColor(tColorMap.red, tColorMap.green, tColorMap.blue);
 
     SDL_RenderPresent( Renderer );
 
