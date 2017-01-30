@@ -7,8 +7,15 @@ SDL_Surface* WindowSurface = NULL;
 SDL_Surface* ImageSurface = NULL;
 std::vector<SDL_Surface*> KeyPressSurface;
 SDL_Renderer* Renderer;
-SDL_Rect gSpriteClips[4];
+
 LTexture gSpriteSheetTexture;
+LTexture gBackground;
+
+const int WALKING_ANIMATION_FRAMES = 4;
+SDL_Rect gSpriteClips[WALKING_ANIMATION_FRAMES];
+
+SDL_Rect* currentClip;
+int frame = 0;
 
 struct colorMap {
     Uint8 red;
@@ -50,11 +57,11 @@ int CApp::OnExecute(){
 
         OnLoop();
 
-        tColorMap.red = std::rand();
-        tColorMap.green = std::rand();
-        tColorMap.blue = std::rand();
+        //tColorMap.red = std::rand();
+        //tColorMap.green = std::rand();
+        //tColorMap.blue = std::rand();
+        //printf("Color Map: %d %d %d", tColorMap.red, tColorMap.green, tColorMap.blue);
 
-        printf("Color Map: %d %d %d", tColorMap.red, tColorMap.green, tColorMap.blue);
         OnRender();
 
     }
@@ -72,15 +79,27 @@ void CApp::OnRender(){
     //Clear screen
     SDL_SetRenderDrawColor( Renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( Renderer );
+    currentClip = &gSpriteClips[frame / 4];
 
     // Ideally we would create a grid addressing method to select the clip without thinking about all of the screen coordinates
-    gSpriteSheetTexture.render(0,0, Renderer, &gSpriteClips[0]);
-    gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[1].w, 0, Renderer, &gSpriteClips[1]);
-    gSpriteSheetTexture.render(0,SCREEN_HEIGHT - gSpriteClips[2].h, Renderer, &gSpriteClips[2]);
-    gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[3].w, SCREEN_HEIGHT - gSpriteClips[3].h, Renderer, &gSpriteClips[3]);
+    gBackground.render(0,0,Renderer, NULL);
+    gSpriteSheetTexture.render(( SCREEN_WIDTH - currentClip->w ) / 2, ( SCREEN_HEIGHT - currentClip->h ) / 2, Renderer,  currentClip );
+    //gSpriteSheetTexture.render(0,0, Renderer, &gSpriteClips[0]);
+    //gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[1].w, 0, Renderer, &gSpriteClips[1]);
+    //gSpriteSheetTexture.render(0,SCREEN_HEIGHT - gSpriteClips[2].h, Renderer, &gSpriteClips[2]);
+    //gSpriteSheetTexture.render(SCREEN_WIDTH - gSpriteClips[3].w, SCREEN_HEIGHT - gSpriteClips[3].h, Renderer, &gSpriteClips[3]);
 
     gSpriteSheetTexture.setBlendMode(SDL_BLENDMODE_BLEND);
     gSpriteSheetTexture.setAlpha(255);
+
+    //Go to next frame
+                ++frame;
+
+                //Cycle animation
+                if( frame / 4 >= WALKING_ANIMATION_FRAMES )
+                {
+                    frame = 0;
+                }
 
     //gSpriteSheetTexture.setColor(tColorMap.red, tColorMap.green, tColorMap.blue);
 
@@ -123,7 +142,7 @@ bool CApp::OnInit(){
 
 
 
-    Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+    Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (Renderer == NULL){
         success = false;
     }else {
@@ -138,8 +157,15 @@ bool CApp::OnInit(){
 		}
     }
 
-     //Load Foo' texture
-    if( !gSpriteSheetTexture.loadFromFile( ".\\assets\\sprites.png", Renderer ) )
+    /*
+
+        Load textures
+
+    */
+
+    gBackground.loadFromFile( ".\\assets\\background.png", Renderer );
+
+    if( !gSpriteSheetTexture.loadFromFile( ".\\assets\\fooAnim.png", Renderer ) )
     {
         printf( "Failed to load Foo' texture image!\n" );
         success = false;
@@ -147,26 +173,26 @@ bool CApp::OnInit(){
        //Set top left sprite
         gSpriteClips[ 0 ].x =   0;
         gSpriteClips[ 0 ].y =   0;
-        gSpriteClips[ 0 ].w = 100;
-        gSpriteClips[ 0 ].h = 100;
+        gSpriteClips[ 0 ].w = 64;
+        gSpriteClips[ 0 ].h = 205;
 
         //Set top right sprite
-        gSpriteClips[ 1 ].x = 100;
+        gSpriteClips[ 1 ].x = 64;
         gSpriteClips[ 1 ].y =   0;
-        gSpriteClips[ 1 ].w = 100;
-        gSpriteClips[ 1 ].h = 100;
+        gSpriteClips[ 1 ].w = 64;
+        gSpriteClips[ 1 ].h = 205;
 
         //Set bottom left sprite
-        gSpriteClips[ 2 ].x =   0;
-        gSpriteClips[ 2 ].y = 100;
-        gSpriteClips[ 2 ].w = 100;
-        gSpriteClips[ 2 ].h = 100;
+        gSpriteClips[ 2 ].x = 128;
+        gSpriteClips[ 2 ].y = 0;
+        gSpriteClips[ 2 ].w = 64;
+        gSpriteClips[ 2 ].h = 205;
 
         //Set bottom right sprite
-        gSpriteClips[ 3 ].x = 100;
-        gSpriteClips[ 3 ].y = 100;
-        gSpriteClips[ 3 ].w = 100;
-        gSpriteClips[ 3 ].h = 100;
+        gSpriteClips[ 3 ].x = 196;
+        gSpriteClips[ 3 ].y = 0;
+        gSpriteClips[ 3 ].w = 64;
+        gSpriteClips[ 3 ].h = 205;
     }
 
     return success;
